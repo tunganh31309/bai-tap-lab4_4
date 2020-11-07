@@ -1,16 +1,60 @@
 # lab4_4
 
-A new Flutter project.
+Chuyển đối số đến một tuyến đường đã đặt tên
 
-## Getting Started
+## Các bước làm
+1. Xác định các đối số bạn cần chuyển
+```class ScreenArguments {
+  final String title;
+  final String message;
 
-This project is a starting point for a Flutter application.
+  ScreenArguments(this.title, this.message);
+}
+```
+2. Tạo một widget trích xuất các đối số
+```
+class ExtractArgumentsScreen extends StatelessWidget {
+  static const routeName = '/extractArguments';
 
-A few resources to get you started if this is your first Flutter project:
+  @override
+  Widget build(BuildContext context) {
+    // Extract the arguments from the current ModalRoute settings and cast
+    // them as ScreenArguments.
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(args.title),
+      ),
+      body: Center(
+        child: Text(args.message),
+      ),
+    );
+  }
+}
+```
+3. Đăng ký widget trong bảng routes 
+```
+MaterialApp(
+  routes: {
+    ExtractArgumentsScreen.routeName: (context) => ExtractArgumentsScreen(),
+  },
+);
+```
+4. Điều hướng đến tiện ích con
+``RaisedButton(
+  child: Text("Navigate to screen that extracts arguments"),
+  onPressed: () {
+    
+    Navigator.pushNamed(
+      context,
+      ExtractArgumentsScreen.routeName,
+      arguments: ScreenArguments(
+        'Extract Arguments Screen',
+        'This message is extracted in the build method.',
+      ),
+    );
+  },
+),
+```
+5.
