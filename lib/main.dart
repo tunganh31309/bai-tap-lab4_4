@@ -76,8 +76,6 @@ class HomeScreen extends StatelessWidget {
             RaisedButton(
               child: Text("Navigate to a named that accepts arguments"),
               onPressed: () {
-                // When the user taps the button, navigate to a named route
-                // and provide the arguments as an optional parameter.
                 Navigator.pushNamed(
                   context,
                   PassArgumentsScreen.routeName,
